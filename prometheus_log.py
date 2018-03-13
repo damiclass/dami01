@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import time
 import os
+import re
 
 counter=0
 request_time=0
@@ -51,7 +52,11 @@ class file_read:
     	        request_time=0            # 每10次 计算一次平均 http_time, 然后清零	
 
 ###############################################################################
-	    code=list[11]
+	    matchObj = re.match( r'(.*) (HTTP/1.0..) (...)', line , re.M|re.I)
+	    code=str(matchObj.group(3))
+	    #print "matchObj.group() : ", matchObj.group(1)
+    
+	    print (code)
 	    if ( int(code) <= 599 ) and ( int(code) >= 500 ):
 		http_code_5xx=http_code_5xx+1 
 		#print ('http_code_5xx:', http_code_5xx)
